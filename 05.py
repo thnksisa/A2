@@ -26,4 +26,6 @@ while True:
         print("-" * 50)
         continue
     else:
-        break
+        print("Devido a entrada incorreta, iremos reiniciar o programa.")
+        print("-" * 50)
+        continue
