@@ -1,0 +1,121 @@
+CREATE TABLE venda (
+     valorTotal       INT     NOT NULL,
+     dataHora CHAR    NOT NULL,
+     idVenda          INT     NOT NULL        AUTO_INCREMENT,
+     PRIMARY KEY (idVenda)
+     );
+
+DESCRIBE venda;
+
+CREATE TABLE itemVenda (
+     valorUnitario    INT     NOT NULL,
+     quantidade       INT     NOT NULL,
+     idItemVenda      INT     NOT NULL        AUTO_INCREMENT,
+     PRIMARY KEY (idItemVenda)
+     );
+
+
+ALTER TABLE itemVenda
+     ADD COLUMN idVenda       INT     NOT NULL;
+
+ALTER TABLE itemVenda
+     ADD FOREIGN KEY (idVenda) REFERENCES venda(idVenda);
+
+ALTER TABLE venda
+     MODIFY COLUMN dataHora   char(255);
+ 
+CREATE TABLE produto (
+     idProduto        INT     NOT NULL        AUTO_INCREMENT,
+     valor            CHAR(255),
+     PRIMARY KEY (idProduto)
+     );
+
+ALTER TABLE itemVenda
+    ADD COLUMN idProduto     INT     NOT NULL;
+
+ALTER TABLE itemVenda
+    ADD FOREIGN KEY (idProduto) REFERENCES produto(idProduto);
+
+ALTER TABLE produto
+    MODIFY COLUMN valor CHAR(255)    NOT NULL;
+
+
+INSERT INTO produto
+    VALUES(1,50);
+
+INSERT INTO produto
+    VALUES(2,100);
+
+
+INSERT INTO produto
+    VALUES(3,150);
+
+INSERT INTO produto
+    VALUES(4,200);
+
+INSERT INTO venda (dataHora, valorTotal)
+    VALUES('22-05-2024 | 22:45', 1500);
+
+INSERT INTO venda (valorTotal, dataHora)
+    VALUES (51000, '12-08-2024 | 9:27');
+
+INSERT INTO venda (valorTotal, dataHora)
+    VALUES (3000, '14-03-2025 | 20:57');
+
+
+INSERT INTO venda (valorTotal, dataHora)
+    VALUES (25000, '10-05-2025 | 6:20');
+
+
+
+INSERT INTO venda (valorTotal, dataHora)
+VALUES (10000, '07-01-2025 | 00:01');
+
+INSERT INTO itemVenda (valorUnitario, quantidade, idVenda, idProduto)
+VALUES (15, 5, 1, 1);
+
+INSERT INTO itemVenda (valorUnitario, quantidade, idVenda, idProduto)
+VALUES (39, 7, 2, 2);
+
+INSERT INTO itemVenda (valorUnitario, quantidade, idVenda, idProduto)
+    VALUES (20, 4, 3, 3);
+
+INSERT INTO itemVenda (valorUnitario, quantidade, idVenda, idProduto)
+    VALUES (2, 90, 4, 4);
+
+INSERT INTO itemVenda (valorUnitario, quantidade, idVenda, idProduto)
+    VALUES (1500, 252, 5, 5);
+
+select * from itemVenda;
++---------------+------------+-------------+---------+-----------+
+| valorUnitario | quantidade | idItemVenda | idVenda | idProduto |
++---------------+------------+-------------+---------+-----------+
+|            15 |          5 |           1 |       1 |         1 |
+|            39 |          7 |           2 |       2 |         2 |
+|            20 |          4 |           3 |       3 |         3 |
+|             2 |         90 |           4 |       4 |         4 |
+|          1500 |        252 |           5 |       5 |         5 |
++---------------+------------+-------------+---------+-----------+
+
+select * from produto;
++-----------+-------+
+| idProduto | valor |
++-----------+-------+
+|         1 | 50    |
+|         2 | 100   |
+|         3 | 150   |
+|         4 | 200   |
+|         5 | 250   |
++-----------+-------+
+
+
+select * from venda;
++------------+--------------------+---------+
+| valorTotal | dataHora           | idVenda |
++------------+--------------------+---------+
+|       1500 | 22-05-2024 | 22:45 |       1 |
+|      51000 | 12-08-2024 | 9:27  |       2 |
+|       3000 | 14-03-2025 | 20:57 |       3 |
+|      25000 | 10-05-2025 | 6:20  |       4 |
+|      10000 | 07-01-2025 | 00:01 |       5 |
++------------+--------------------+---------+
